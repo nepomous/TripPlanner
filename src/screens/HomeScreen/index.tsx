@@ -9,11 +9,15 @@ import {
 import {assets} from './assets';
 import {styles} from './styles';
 
-export const HomeScreen: React.FunctionComponent = ({}) => {
+export const HomeScreen: React.FunctionComponent = ({navigation}) => {
   const [isShown, setIsShown] = useState(true);
 
   const handleShow = () => {
     setIsShown(!isShown);
+  };
+
+  const goToTrips = () => {
+    navigation.navigate('TripsScreen');
   };
 
   return (
@@ -31,7 +35,7 @@ export const HomeScreen: React.FunctionComponent = ({}) => {
           </View>
         </TouchableWithoutFeedback>
       ) : (
-        <TouchableWithoutFeedback onPress={handleShow}>
+        <TouchableWithoutFeedback onPress={goToTrips}>
           <View style={styles.buttonEmptyStateBackground}>
             <Image source={assets.pin} style={styles.pin} />
             <Text style={styles.buttonEmptyStateText}>
