@@ -11,13 +11,10 @@ export const styles = StyleSheet.create({
   },
   mapWrapper: {
     flex: 1,
-    backgroundColor: 'red',
   },
   tripWrapper: {
     backgroundColor: 'white',
-    paddingLeft: 16,
-    paddingTop: 16,
-    paddingRight: 16,
+    padding: 16,
   },
   tripImage: {
     backgroundColor: 'green',
@@ -33,5 +30,11 @@ export const styles = StyleSheet.create({
     backgroundColor: '#1C74BC',
     padding: 4,
     color: 'white',
+  },
+  addTripButton: {
+    position: 'absolute',
+    bottom: 0,
+    right: 20,
+    padding: 10,
   },
 });

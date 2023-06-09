@@ -8,9 +8,10 @@ import {
 } from 'react-native';
 import {assets} from './assets';
 import {styles} from './styles';
+import {isIphone} from '../../utils/isIphone';
 
 export const HomeScreen: React.FunctionComponent = ({navigation}) => {
-  const [isShown, setIsShown] = useState(true);
+  const [isShown, setIsShown] = useState(false);
 
   const handleShow = () => {
     setIsShown(!isShown);
@@ -30,7 +31,11 @@ export const HomeScreen: React.FunctionComponent = ({navigation}) => {
       </View>
       {!isShown ? (
         <TouchableWithoutFeedback onPress={handleShow}>
-          <View style={styles.buttonBackground}>
+          <View
+            style={[
+              styles.buttonBackground,
+              isIphone() ? {paddingBottom: 32} : null,
+            ]}>
             <Text style={styles.buttonText}>COMEÇAR!</Text>
           </View>
         </TouchableWithoutFeedback>
@@ -41,7 +46,10 @@ export const HomeScreen: React.FunctionComponent = ({navigation}) => {
             <Text style={styles.buttonEmptyStateText}>
               Vamos planejar sua primeira viagem?
             </Text>
-            <Image source={assets.arrowRight} style={styles.arrow} />
+            <Image
+              source={assets.arrowRight}
+              style={[styles.arrow, isIphone() ? {marginBottom: 16} : null]}
+            />
           </View>
         </TouchableWithoutFeedback>
       )}
