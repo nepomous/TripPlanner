@@ -5,19 +5,22 @@ import {styles} from './styles';
 import {isIphone} from '../../utils/isIphone';
 import MapView from 'react-native-maps';
 import {assets} from './assets';
+import {TripsScreenProps} from '../../Navigation/types';
 
-export const TripsScreen: React.FunctionComponent = ({navigation}) => {
+export const TripsScreen: React.FunctionComponent<TripsScreenProps> = ({
+  navigation,
+}: TripsScreenProps) => {
   const trips = [
     {id: '1', name: 'Eurotrip 2023', price: '2222'},
     {id: '2', name: 'Latam trip 2023', price: '3000'},
   ];
 
   const goToTripPlan = () => {
-    navigation.navigate('TripPlan');
+    navigation.navigate('TripPlanScreen');
   };
 
   const goToAddTrip = () => {
-    navigation.navigate('AddTrip');
+    navigation.navigate('AddTripScreen');
   };
 
   return (

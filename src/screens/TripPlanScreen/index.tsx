@@ -3,8 +3,11 @@ import {FlatList, Text, View, Image, TouchableOpacity} from 'react-native';
 import {assets} from './assets';
 
 import {styles} from './styles';
+import {TripPlanScreenProps} from '../../Navigation/types';
 
-export const TripPlanScreen: React.FunctionComponent = ({navigation}) => {
+export const TripPlanScreen: React.FunctionComponent<TripPlanScreenProps> = ({
+  navigation,
+}: TripPlanScreenProps) => {
   const trip = {
     name: 'EuroTrip 2023',
     price: '5000',
@@ -28,7 +31,7 @@ export const TripPlanScreen: React.FunctionComponent = ({navigation}) => {
     ],
   };
 
-  const renderItem = ({item}) => {
+  const renderItem = ({item}: any) => {
     return (
       <View style={styles.tripPlanItemWrapper}>
         <View style={{flex: 1}}>

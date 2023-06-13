@@ -5,29 +5,30 @@ import {NavigationContainer} from '@react-navigation/native';
 import {TripsScreen} from './src/screens/TripsScreen';
 import {TripPlanScreen} from './src/screens/TripPlanScreen';
 import {AddTripScreen} from './src/screens/AddTripScreen';
+import {RootStackParamList} from './src/Navigation/types';
 
-const AppNavigator = createStackNavigator();
+const AppNavigator = createStackNavigator<RootStackParamList>();
 
 const Navigation = () => {
   return (
-    <AppNavigator.Navigator initialRouteName="Trips">
+    <AppNavigator.Navigator initialRouteName="TripsScreen">
       <AppNavigator.Screen
         name="Home"
         component={HomeScreen}
         options={{headerShown: false}}
       />
       <AppNavigator.Screen
-        name="Trips"
+        name="TripsScreen"
         component={TripsScreen}
         options={{headerShown: false}}
       />
       <AppNavigator.Screen
-        name="TripPlan"
+        name="TripPlanScreen"
         component={TripPlanScreen}
         options={{headerShown: false}}
       />
       <AppNavigator.Screen
-        name="AddTrip"
+        name="AddTripScreen"
         component={AddTripScreen}
         options={{headerShown: false}}
       />

@@ -11,8 +11,11 @@ import MapView, {Marker} from 'react-native-maps';
 
 import {styles} from './styles';
 import {assets} from './assets';
+import {AddTripScreenProps} from '../../Navigation/types';
 
-export const AddTripScreen = ({navigation}) => {
+export const AddTripScreen: React.FC<AddTripScreenProps> = ({
+  navigation,
+}: AddTripScreenProps) => {
   const [markerState, setMarkerState] = useState({
     position: {
       latitude: 37.78825,

@@ -9,8 +9,11 @@ import {
 import {assets} from './assets';
 import {styles} from './styles';
 import {isIphone} from '../../utils/isIphone';
+import {HomeScreenProps} from '../../Navigation/types';
 
-export const HomeScreen: React.FunctionComponent = ({navigation}) => {
+export const HomeScreen: React.FunctionComponent<HomeScreenProps> = ({
+  navigation,
+}: HomeScreenProps) => {
   const [isShown, setIsShown] = useState(false);
 
   const handleShow = () => {
