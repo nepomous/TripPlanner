@@ -5,6 +5,7 @@ export type RootStackParamList = {
   AddTripScreen: undefined;
   TripsScreen: undefined;
   TripPlanScreen: undefined;
+  AddPointScreen: {id: number};
 };
 
 export type HomeScreenProps = NativeStackScreenProps<
@@ -23,4 +24,8 @@ export type TripsScreenProps = NativeStackScreenProps<
 export type TripPlanScreenProps = NativeStackScreenProps<
   RootStackParamList,
   'TripPlanScreen'
+>;
+export type AddPointScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  'AddPointScreen'
 >;

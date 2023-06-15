@@ -3,7 +3,6 @@ import {StyleSheet} from 'react-native';
 export const styles = StyleSheet.create({
   screenWrapper: {
     flex: 1,
-    paddingTop: 120,
   },
   photoWrapper: {height: 192, backgroundColor: 'grey'},
   tripPlanTitle: {

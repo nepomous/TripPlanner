@@ -12,18 +12,13 @@ import MapView, {Marker} from 'react-native-maps';
 import {styles} from './styles';
 import {assets} from './assets';
 import {AddTripScreenProps} from '../../Navigation/types';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const AddTripScreen: React.FC<AddTripScreenProps> = ({
   navigation,
 }: AddTripScreenProps) => {
-  const [markerState, setMarkerState] = useState({
-    position: {
-      latitude: 37.78825,
-      longitude: -122.4324,
-    },
-    pointName: '',
-    description: '',
-    price: '0',
+  const [tripState, setTripState] = useState({
+    trip: '',
   });
   const trip = {
     name: 'EuroTrip 2023',
@@ -48,52 +43,39 @@ export const AddTripScreen: React.FC<AddTripScreenProps> = ({
     ],
   };
 
-  const salvarPonto = () => {};
+  const goToAddTrip = (tripId: number) => {
+    navigation.navigate('AddPointScreen', {id: tripId});
+  };
+
+  const salvarPonto = async (trip: string) => {
+    const newTrip = {
+      trip,
+      id: new Date().getTime(),
+      price: 0,
+      latitude: 0,
+      longitude: 0,
+    };
+    const tripsAS = await AsyncStorage.getItem('trips');
+    let trips = [];
+    if (tripsAS) {
+      trips = JSON.parse(tripsAS);
+    }
+    trips.push(newTrip);
+    await AsyncStorage.setItem('trips', JSON.stringify(trips));
+    goToAddTrip(newTrip.id);
+  };
 
   return (
     <View style={styles.screenWrapper}>
-      <View style={styles.photoWrapper}>
-        <MapView
-          style={{flex: 1}}
-          initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}>
-          <Marker
-            draggable
-            coordinate={markerState.position}
-            onDragEnd={evt =>
-              setMarkerState({
-                ...markerState,
-                position: evt.nativeEvent.coordinate,
-              })
-            }
-          />
-        </MapView>
-        <View style={styles.backButtonWrapper}>
-          <TouchableOpacity onPress={navigation.goBack}>
-            <Image source={assets.arrowLeft} />
-          </TouchableOpacity>
-        </View>
-        <Text style={styles.tripPlanTitle}>{trip.name}</Text>
-        <Text style={styles.tripPlanPrice}>{trip.price}</Text>
-      </View>
       <TextInput
-        placeholder="Nome do ponto"
-        onChangeText={txt => setMarkerState({...markerState, pointName: txt})}
+        style={styles.input}
+        placeholder="Nome da viagem"
+        onChangeText={txt => setTripState({...tripState, trip: txt})}
       />
-      <TextInput
-        placeholder="Descrição do local"
-        onChangeText={txt => setMarkerState({...markerState, description: txt})}
-      />
-      <TextInput
-        placeholder="Preço"
-        onChangeText={txt => setMarkerState({...markerState, price: txt})}
-      />
-      <TouchableOpacity onPress={salvarPonto}>
-        <Text>Salvar Ponto</Text>
+      <TouchableOpacity
+        style={styles.btn}
+        onPress={() => salvarPonto(tripState.trip)}>
+        <Text>Salvar Viagem</Text>
       </TouchableOpacity>
     </View>
   );
