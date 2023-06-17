@@ -5,12 +5,15 @@ import {assets} from './assets';
 import {styles} from './styles';
 import {TripPlanScreenProps} from '../../Navigation/types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {TripObj, TripPoint} from '../../utils/tripTypes';
 
 export const TripPlanScreen: React.FunctionComponent<TripPlanScreenProps> = ({
   navigation,
+  route,
 }: TripPlanScreenProps) => {
-  const [trips, setTrips] = useState([]);
-  const [points, setPoints] = useState([]);
+  const tripId = route.params.id;
+  const [trips, setTrips] = useState<TripObj>();
+  const [points, setPoints] = useState<TripPoint[]>([]);
   const trip = {
     name: 'EuroTrip 2023',
     price: '5000',
@@ -43,9 +46,11 @@ export const TripPlanScreen: React.FunctionComponent<TripPlanScreenProps> = ({
     if (tripsAS) {
       trips = JSON.parse(tripsAS);
     }
-    setTrips(trips);
+    let mainTrip = trips.find((x: TripObj) => x.id === tripId);
+    setTrips(mainTrip);
 
-    const pointsAS = await AsyncStorage.getItem('trip-');
+    // const pointsAS = await AsyncStorage.getItem('trip-'+id);
+    const pointsAS = await AsyncStorage.getItem('trip-' + tripId);
     let points = [];
     if (pointsAS) {
       points = JSON.parse(pointsAS);
@@ -57,11 +62,13 @@ export const TripPlanScreen: React.FunctionComponent<TripPlanScreenProps> = ({
     return (
       <View style={styles.tripPlanItemWrapper}>
         <View style={{flex: 1}}>
-          <Text style={styles.tripPlanItemName}>{item.name}</Text>
+          <Text style={styles.tripPlanItemName}>{item.pointName}</Text>
           <Text>{item.description}</Text>
         </View>
         <View style={styles.tripPlanItemPriceWrapper}>
-          <Text style={styles.tripPlanItemPrice}>{item.price}</Text>
+          <Text style={styles.tripPlanItemPrice}>
+            R$ {item.price.toFixed(2)}
+          </Text>
         </View>
       </View>
     );
@@ -75,13 +82,13 @@ export const TripPlanScreen: React.FunctionComponent<TripPlanScreenProps> = ({
             <Image source={assets.arrowLeft} />
           </TouchableOpacity>
         </View>
-        <Text style={styles.tripPlanTitle}>{trip.name}</Text>
-        <Text style={styles.tripPlanPrice}>{trip.price}</Text>
+        <Text style={styles.tripPlanTitle}>{trips?.name}</Text>
+        <Text style={styles.tripPlanPrice}>R$ {trips?.price.toFixed(2)}</Text>
       </View>
       <FlatList
         style={styles.flatListWrapper}
-        keyExtractor={item => item.id}
-        data={trip.places}
+        keyExtractor={(item, index) => item.pointName}
+        data={points}
         renderItem={renderItem}
         contentContainerStyle={{
           paddingTop: 16,

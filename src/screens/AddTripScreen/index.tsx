@@ -1,18 +1,10 @@
 import React, {useState} from 'react';
-import {
-  FlatList,
-  Image,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import MapView, {Marker} from 'react-native-maps';
+import {Text, TextInput, TouchableOpacity, View} from 'react-native';
 
 import {styles} from './styles';
-import {assets} from './assets';
 import {AddTripScreenProps} from '../../Navigation/types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {TripObj} from '../../utils/tripTypes';
 
 export const AddTripScreen: React.FC<AddTripScreenProps> = ({
   navigation,
@@ -48,12 +40,15 @@ export const AddTripScreen: React.FC<AddTripScreenProps> = ({
   };
 
   const salvarPonto = async (tripName: string) => {
-    const newTrip = {
+    const newTrip: TripObj = {
       name: tripName,
       id: new Date().getTime(),
       price: 0,
-      latitude: 0,
-      longitude: 0,
+      position: {
+        latitude: 0,
+        longitude: 0,
+      },
+      description: '',
     };
     const tripsAS = await AsyncStorage.getItem('trips');
     let trips = [];

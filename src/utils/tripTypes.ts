@@ -10,3 +10,10 @@ export type TripPosition = {
   latitude: number;
   longitude: number;
 };
+
+export type TripPoint = {
+  pointName: string;
+  position: TripPosition;
+  description: string;
+  price: number;
+};

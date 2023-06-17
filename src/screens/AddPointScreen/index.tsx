@@ -5,20 +5,19 @@ import {assets} from './assets';
 import {AddPointScreenProps} from '../../Navigation/types';
 import MapView, {Marker} from 'react-native-maps';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {TripObj} from '../../utils/tripTypes';
+import {TripObj, TripPoint} from '../../utils/tripTypes';
 
 export const AddPointScreen: React.FC<AddPointScreenProps> = ({
   navigation,
   route,
 }: AddPointScreenProps) => {
   const tripId = route.params.id;
-  const [markerState, setMarkerState] = useState<TripObj>({
-    id: tripId,
+  const [markerState, setMarkerState] = useState<TripPoint>({
     position: {
       latitude: 37.78825,
       longitude: -122.4324,
     },
-    name: '',
+    pointName: '',
     description: '',
     price: 0,
   });
@@ -29,7 +28,7 @@ export const AddPointScreen: React.FC<AddPointScreenProps> = ({
 
   const handleSave = async () => {
     const pointsAS = await AsyncStorage.getItem('trip-' + tripId);
-    let points: any = [];
+    let points: TripPoint[] = [];
     if (pointsAS) {
       points = JSON.parse(pointsAS);
     }
@@ -39,18 +38,17 @@ export const AddPointScreen: React.FC<AddPointScreenProps> = ({
     points.forEach((p: {price: number}) => {
       total += p.price;
     });
-
     const tripsAS = await AsyncStorage.getItem('trips');
 
-    let trips: any[] = [];
+    let trips: TripObj[] = [];
     if (tripsAS) {
       trips = JSON.parse(tripsAS);
     }
     trips.forEach((trip, index) => {
       if (trip.id === tripId) {
         trips[index].price = total;
-        trips[index].latitude = points[0].position.latitude;
-        trips[index].longitude = points[0].position.longitude;
+        trips[index].position.latitude = points[0].position.latitude;
+        trips[index].position.longitude = points[0].position.longitude;
       }
     });
     await AsyncStorage.setItem('trips', JSON.stringify(trips));
@@ -88,7 +86,7 @@ export const AddPointScreen: React.FC<AddPointScreenProps> = ({
       <TextInput
         style={styles.input}
         placeholder="Nome do ponto"
-        onChangeText={txt => setMarkerState({...markerState, name: txt})}
+        onChangeText={txt => setMarkerState({...markerState, pointName: txt})}
       />
       <TextInput
         style={styles.input}
