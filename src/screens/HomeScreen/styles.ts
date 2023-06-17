@@ -26,7 +26,6 @@ export const styles = StyleSheet.create({
   buttonEmptyStateBackground: {
     backgroundColor: 'white',
     padding: 18,
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },

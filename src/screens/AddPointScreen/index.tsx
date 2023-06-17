@@ -5,21 +5,27 @@ import {assets} from './assets';
 import {AddPointScreenProps} from '../../Navigation/types';
 import MapView, {Marker} from 'react-native-maps';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {TripObj} from '../../utils/tripTypes';
 
 export const AddPointScreen: React.FC<AddPointScreenProps> = ({
   navigation,
   route,
 }: AddPointScreenProps) => {
-  const [tripId, setTripId] = useState(route.params);
-  const [markerState, setMarkerState] = useState({
+  const tripId = route.params.id;
+  const [markerState, setMarkerState] = useState<TripObj>({
+    id: tripId,
     position: {
       latitude: 37.78825,
       longitude: -122.4324,
     },
-    pointName: '',
+    name: '',
     description: '',
     price: 0,
   });
+
+  const goToTrips = () => {
+    navigation.navigate('TripsScreen');
+  };
 
   const handleSave = async () => {
     const pointsAS = await AsyncStorage.getItem('trip-' + tripId);
@@ -29,7 +35,6 @@ export const AddPointScreen: React.FC<AddPointScreenProps> = ({
     }
     points.push(markerState);
     await AsyncStorage.setItem('trip-' + tripId, JSON.stringify(points));
-
     let total = 0;
     points.forEach((p: {price: number}) => {
       total += p.price;
@@ -49,7 +54,7 @@ export const AddPointScreen: React.FC<AddPointScreenProps> = ({
       }
     });
     await AsyncStorage.setItem('trips', JSON.stringify(trips));
-    console.log('trips?', trips);
+    goToTrips();
   };
 
   return (
@@ -83,7 +88,7 @@ export const AddPointScreen: React.FC<AddPointScreenProps> = ({
       <TextInput
         style={styles.input}
         placeholder="Nome do ponto"
-        onChangeText={txt => setMarkerState({...markerState, pointName: txt})}
+        onChangeText={txt => setMarkerState({...markerState, name: txt})}
       />
       <TextInput
         style={styles.input}

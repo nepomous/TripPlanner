@@ -1,13 +1,16 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {FlatList, Text, View, Image, TouchableOpacity} from 'react-native';
 import {assets} from './assets';
 
 import {styles} from './styles';
 import {TripPlanScreenProps} from '../../Navigation/types';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const TripPlanScreen: React.FunctionComponent<TripPlanScreenProps> = ({
   navigation,
 }: TripPlanScreenProps) => {
+  const [trips, setTrips] = useState([]);
+  const [points, setPoints] = useState([]);
   const trip = {
     name: 'EuroTrip 2023',
     price: '5000',
@@ -29,6 +32,25 @@ export const TripPlanScreen: React.FunctionComponent<TripPlanScreenProps> = ({
         long: 0,
       },
     ],
+  };
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    const tripsAS = await AsyncStorage.getItem('trips');
+    let trips = [];
+    if (tripsAS) {
+      trips = JSON.parse(tripsAS);
+    }
+    setTrips(trips);
+
+    const pointsAS = await AsyncStorage.getItem('trip-');
+    let points = [];
+    if (pointsAS) {
+      points = JSON.parse(pointsAS);
+    }
+    setPoints(points);
   };
 
   const renderItem = ({item}: any) => {

@@ -10,7 +10,7 @@ const AppNavigator = createStackNavigator<RootStackParamList>();
 
 export const Navigation = () => {
   return (
-    <AppNavigator.Navigator initialRouteName="AddTripScreen">
+    <AppNavigator.Navigator initialRouteName="Home">
       <AppNavigator.Screen
         name="Home"
         component={HomeScreen}

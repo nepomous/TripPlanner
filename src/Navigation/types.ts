@@ -4,7 +4,7 @@ export type RootStackParamList = {
   Home: undefined;
   AddTripScreen: undefined;
   TripsScreen: undefined;
-  TripPlanScreen: undefined;
+  TripPlanScreen: {id: number};
   AddPointScreen: {id: number};
 };
 

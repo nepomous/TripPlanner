@@ -18,8 +18,8 @@ export const TripsScreen: React.FunctionComponent<TripsScreenProps> = ({
     {id: '2', name: 'Latam trip 2023', price: '3000'},
   ];
 
-  const goToTripPlan = () => {
-    navigation.navigate('TripPlanScreen');
+  const goToTripPlan = (id: number) => {
+    navigation.navigate('TripPlanScreen', {id});
   };
 
   const goToAddTrip = () => {
@@ -27,8 +27,16 @@ export const TripsScreen: React.FunctionComponent<TripsScreenProps> = ({
   };
 
   useEffect(() => {
-    loadData();
-  }, []);
+    const refresh = navigation.addListener('focus', () => {
+      loadData();
+    });
+
+    return refresh;
+  }, [navigation]);
+
+  // useEffect(() => {
+  //   loadData();
+  // }, []);
 
   const loadData = async () => {
     const tripsAS = await AsyncStorage.getItem('trips');
@@ -58,7 +66,7 @@ export const TripsScreen: React.FunctionComponent<TripsScreenProps> = ({
         data={trips}
         renderItem={({item}) => (
           <Trips
-            onPress={goToTripPlan}
+            onPress={() => goToTripPlan(item.id)}
             title={item.name}
             price={item.price.toString()}
           />
@@ -66,7 +74,7 @@ export const TripsScreen: React.FunctionComponent<TripsScreenProps> = ({
         horizontal
         style={[{flexGrow: 0}, isIphone() ? {marginBottom: 20} : null]}
         pagingEnabled
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={item => item?.id?.toString()}
       />
     </View>
   );

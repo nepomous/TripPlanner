@@ -18,7 +18,7 @@ export const AddTripScreen: React.FC<AddTripScreenProps> = ({
   navigation,
 }: AddTripScreenProps) => {
   const [tripState, setTripState] = useState({
-    trip: '',
+    name: '',
   });
   const trip = {
     name: 'EuroTrip 2023',
@@ -47,9 +47,9 @@ export const AddTripScreen: React.FC<AddTripScreenProps> = ({
     navigation.navigate('AddPointScreen', {id: tripId});
   };
 
-  const salvarPonto = async (trip: string) => {
+  const salvarPonto = async (tripName: string) => {
     const newTrip = {
-      trip,
+      name: tripName,
       id: new Date().getTime(),
       price: 0,
       latitude: 0,
@@ -70,11 +70,11 @@ export const AddTripScreen: React.FC<AddTripScreenProps> = ({
       <TextInput
         style={styles.input}
         placeholder="Nome da viagem"
-        onChangeText={txt => setTripState({...tripState, trip: txt})}
+        onChangeText={txt => setTripState({...tripState, name: txt})}
       />
       <TouchableOpacity
         style={styles.btn}
-        onPress={() => salvarPonto(tripState.trip)}>
+        onPress={() => salvarPonto(tripState.name)}>
         <Text>Salvar Viagem</Text>
       </TouchableOpacity>
     </View>
