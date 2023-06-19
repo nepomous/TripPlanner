@@ -13,6 +13,7 @@ export const AddPointScreen: React.FC<AddPointScreenProps> = ({
 }: AddPointScreenProps) => {
   const tripId = route.params.id;
   const [markerState, setMarkerState] = useState<TripPoint>({
+    id: new Date().getTime(),
     position: {
       latitude: 37.78825,
       longitude: -122.4324,
@@ -21,10 +22,6 @@ export const AddPointScreen: React.FC<AddPointScreenProps> = ({
     description: '',
     price: 0,
   });
-
-  const goToTrips = () => {
-    navigation.navigate('TripsScreen');
-  };
 
   const handleSave = async () => {
     const pointsAS = await AsyncStorage.getItem('trip-' + tripId);
@@ -52,7 +49,8 @@ export const AddPointScreen: React.FC<AddPointScreenProps> = ({
       }
     });
     await AsyncStorage.setItem('trips', JSON.stringify(trips));
-    goToTrips();
+
+    navigation.goBack();
   };
 
   return (

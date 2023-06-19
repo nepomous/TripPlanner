@@ -12,6 +12,7 @@ export type TripPosition = {
 };
 
 export type TripPoint = {
+  id: number;
   pointName: string;
   position: TripPosition;
   description: string;

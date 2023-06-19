@@ -13,10 +13,6 @@ export const TripsScreen: React.FunctionComponent<TripsScreenProps> = ({
   navigation,
 }: TripsScreenProps) => {
   const [trips, setTrips] = useState<TripObj[]>([]);
-  const tripsMock = [
-    {id: '1', name: 'Eurotrip 2023', price: '2222'},
-    {id: '2', name: 'Latam trip 2023', price: '3000'},
-  ];
 
   const goToTripPlan = (id: number) => {
     navigation.navigate('TripPlanScreen', {id});
@@ -33,10 +29,6 @@ export const TripsScreen: React.FunctionComponent<TripsScreenProps> = ({
 
     return refresh;
   }, [navigation]);
-
-  // useEffect(() => {
-  //   loadData();
-  // }, []);
 
   const loadData = async () => {
     const tripsAS = await AsyncStorage.getItem('trips');

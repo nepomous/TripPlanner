@@ -41,4 +41,10 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 18,
   },
+  addPointButton: {
+    position: 'absolute',
+    top: 26,
+    right: 16,
+    padding: 10,
+  },
 });

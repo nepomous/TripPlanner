@@ -63,8 +63,8 @@ export const HomeScreen: React.FunctionComponent<HomeScreenProps> = ({
               />
             </View>
           </TouchableWithoutFeedback>
-          {/* REMOVER QUANDO ENCERRAR O PROJETO */
-          /* <TouchableOpacity onPress={clearAsyncStorage}>
+          {/* REMOVER O BOTAO ABAIXO QUANDO ENCERRAR O PROJETO */}
+          {/* <TouchableOpacity onPress={clearAsyncStorage}>
             <View style={styles.buttonEmptyStateBackground}>
               <Text style={styles.buttonEmptyStateText}>
                 {'Limpar AsyncStorage'}

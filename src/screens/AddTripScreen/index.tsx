@@ -12,28 +12,6 @@ export const AddTripScreen: React.FC<AddTripScreenProps> = ({
   const [tripState, setTripState] = useState({
     name: '',
   });
-  const trip = {
-    name: 'EuroTrip 2023',
-    price: '5000',
-    places: [
-      {
-        id: '1',
-        name: 'Amsterdam',
-        description: 'chegada',
-        price: 100,
-        lat: 0,
-        long: 0,
-      },
-      {
-        id: '2',
-        name: 'Bruxelas',
-        description: 'hospedagem',
-        price: 200,
-        lat: 0,
-        long: 0,
-      },
-    ],
-  };
 
   const goToAddTrip = (tripId: number) => {
     navigation.navigate('AddPointScreen', {id: tripId});

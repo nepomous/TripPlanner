@@ -14,31 +14,17 @@ export const TripPlanScreen: React.FunctionComponent<TripPlanScreenProps> = ({
   const tripId = route.params.id;
   const [trips, setTrips] = useState<TripObj>();
   const [points, setPoints] = useState<TripPoint[]>([]);
-  const trip = {
-    name: 'EuroTrip 2023',
-    price: '5000',
-    places: [
-      {
-        id: '1',
-        name: 'Amsterdam',
-        description: 'chegada',
-        price: 100,
-        lat: 0,
-        long: 0,
-      },
-      {
-        id: '2',
-        name: 'Bruxelas',
-        description: 'hospedagem',
-        price: 200,
-        lat: 0,
-        long: 0,
-      },
-    ],
-  };
+
   useEffect(() => {
-    loadData();
-  }, []);
+    const refresh = navigation.addListener('focus', () => {
+      loadData();
+    });
+    return refresh;
+  }, [navigation]);
+
+  const goToAddPoint = (id: number) => {
+    navigation.navigate('AddPointScreen', {id});
+  };
 
   const loadData = async () => {
     const tripsAS = await AsyncStorage.getItem('trips');
@@ -82,12 +68,17 @@ export const TripPlanScreen: React.FunctionComponent<TripPlanScreenProps> = ({
             <Image source={assets.arrowLeft} />
           </TouchableOpacity>
         </View>
+        <TouchableOpacity
+          style={styles.addPointButton}
+          onPress={() => goToAddPoint(tripId)}>
+          <Image source={assets.addPointIcon} />
+        </TouchableOpacity>
         <Text style={styles.tripPlanTitle}>{trips?.name}</Text>
         <Text style={styles.tripPlanPrice}>R$ {trips?.price.toFixed(2)}</Text>
       </View>
       <FlatList
         style={styles.flatListWrapper}
-        keyExtractor={(item, index) => item.pointName}
+        keyExtractor={(item, index) => item?.id.toString()}
         data={points}
         renderItem={renderItem}
         contentContainerStyle={{
