@@ -50,7 +50,7 @@ export const AddPointScreen: React.FC<AddPointScreenProps> = ({
     });
     await AsyncStorage.setItem('trips', JSON.stringify(trips));
 
-    navigation.goBack();
+    navigation.navigate('TripsScreen');
   };
 
   return (
